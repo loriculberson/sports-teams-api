@@ -45,12 +45,13 @@ function Team(team_name, city, state, venue, sport_league){
 }
 
 exports.seed = function(knex, Promise) {
-  return createTeams().then((sportsTeams) => {
-    return knex('teams')
+  return knex('teams')
     .del()
     .then(()=> {
-      return knex.insert(sportsTeams).into('teams');
+      return createTeams()
+    })
+    .then((sportsTeams) => {
+      return knex.insert(sportsTeams).into('teams')
     })
     .then(() => console.log('Teams added!'))
-  })
 };
