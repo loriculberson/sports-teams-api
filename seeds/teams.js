@@ -3,37 +3,33 @@ const csv = require('csv-parser');
 const fs = require('fs');
 const path = require('path');
 
-
 const teamsCsv = path.join('data', 'test_data.csv');
-const teamsData = [];
-let id = 1;
 // const teamsData = fs.createReadStream(teamsCsv)
 const createTeams = () => {
-  fs.createReadStream(teamsCsv)
-  .pipe(csv())
-  .on('data', function (data) {
-//create a team object for each attribute
-//push team object into array
-    // let id = i;
-      const team = new Team(id, data.Team, data.City, data.State, data.Venue, data.League)
-    
-    teamsData.push(team)
-    id++;
-
+  return new Promise((resolve) => {
+    const allTeams = [];
+    fs.createReadStream(teamsCsv)
+    .pipe(csv())
+    .on('data', (data) => {
+      //.on adds the event listener
+      //'data' is the event
+      //function(data) is the callback function
+        const team = new Team(data.Team, data.City, data.State, data.Venue, data.League)
+        allTeams.push(team)
+        // console.log(allTeams);
+    })
+    .on('end', () => {
+      //resolve the promise with teamsData
+      resolve(allTeams);
+    })
   })
-  .on('end', function (){
-
-    console.log('hi', teamsData);
-  })
-  console.log('hi2', teamsData);
-
 }
 
-const teams = createTeams();
-
+createTeams().then((teamsData) => {
+  console.log('hi', teamsData);
+});
 //construct a Team object; blueprint
-function Team(id, team_name, city, state, venue, sport_league){
-  this.id = id;
+function Team(team_name, city, state, venue, sport_league){
   this.team_name = team_name;
   this.city = city;
   this.state = state;
@@ -41,7 +37,6 @@ function Team(id, team_name, city, state, venue, sport_league){
   this.sport_league = sport_league;
 }
 
-// createTeams();
 
 // exports.seed = function(knex, Promise) {
 //   return knex('teams')
