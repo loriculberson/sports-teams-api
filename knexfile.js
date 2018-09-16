@@ -5,7 +5,7 @@ module.exports = {
     connection: {
       host: '127.0.0.1',
       database: 'sports_teams',
-      charset  : 'utf8'
+      charset  : 'utf8',
     }
   },
 };

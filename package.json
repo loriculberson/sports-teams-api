@@ -5,9 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "csv": "^3.1.0",
+    "csv-parser": "^1.12.1",
     "express": "^4.16.3",
     "knex": "^0.15.2",
-    "knex-csv-transformer": "^1.0.4",
     "path": "^0.12.7",
     "pg": "^7.4.3"
   },
