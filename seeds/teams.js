@@ -3,7 +3,7 @@ const csv = require('csv-parser');
 const fs = require('fs');
 const path = require('path');
 
-const teamsCsv = path.join('data', 'test_data.csv');
+const teamsCsv = path.join('data', 'sports_teams.csv');
 // const teamsData = fs.createReadStream(teamsCsv)
 const createTeams = () => {
   return new Promise((resolve) => {
@@ -25,9 +25,16 @@ const createTeams = () => {
   })
 }
 
-createTeams().then((teamsData) => {
-  console.log('hi', teamsData);
-});
+
+// createTeams() returns a Promise. See line 9
+//the Promise constructor takes a function and that function takes two arguments which are both functions called ==> resolve and reject
+//resolve is a function that takes an argument that can be any type of data (like an array)
+
+//resolve = (teamsData) => {
+  // console.log(teamsData);
+// }
+
+
 //construct a Team object; blueprint
 function Team(team_name, city, state, venue, sport_league){
   this.team_name = team_name;
@@ -37,21 +44,13 @@ function Team(team_name, city, state, venue, sport_league){
   this.sport_league = sport_league;
 }
 
-
-// exports.seed = function(knex, Promise) {
-//   return knex('teams')
-//     .del()
-//     .then(function () {
-//       return knex('teams').insert([
-//         { id: index+1,
-//           team_name: data.team_name,
-//           city: data.city,
-//           state: data.state,
-//           venue: data.venue,
-//           sport_league: data.sport_league
-//         },
-
-//       ]);
-//     });
-//     console.log('Teams Added!');
-// };
+exports.seed = function(knex, Promise) {
+  return createTeams().then((sportsTeams) => {
+    return knex('teams')
+    .del()
+    .then(()=> {
+      return knex.insert(sportsTeams).into('teams');
+    })
+    .then(() => console.log('Teams added!'))
+  })
+};
