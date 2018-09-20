@@ -7,9 +7,7 @@ const knex = require('../knex');
 //   res.status(200).send(cohort);
 
 router.get('/', (req, res) => {
-  knex
-  .select('*')
-  .from('teams')
+  knex('teams')
   .then(data => res.status(200).json(data))
   .catch(err =>
     res.status(404).json({
@@ -20,12 +18,10 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-  //find the team with id of :id
   const id = parseInt(req.params.id);
+  console.log('hi', req.params)
 
-  knex
-    .select('*')
-    .from('teams')
+  knex('teams')
     .where('id', id)
     .then(team => res.status(200).json(team))
     .catch(err =>
@@ -36,17 +32,21 @@ router.get('/:id', (req, res) => {
     );
 });
 
-// routes.get("/:cohortId", (req, res) => {
-//   const cohortId = parseInt(req.params.cohortId);
-//   const cohort = data.cohorts.filter(cohort => cohort.id === cohortId);
-//   res.status(200).send(cohort);
-// });
-//MLB
-// sport_league
-// SELECT * FROM teams WHERE sport_league = MLB
+router.get('/league/:sportLeague', (req, res) => {
+  console.log('hi', req.params)
 
-//NFL
+  const sportLeague = req.params.sportLeague.toUpperCase();
+  knex('teams')
+  .where('sport_league', sportLeague)
+  .then(teams => res.status(200).json(teams))
+    .catch(err =>
+      res.status(404).json({
+        message:
+          'The data you are looking for could not be found. Please try again'
+      })
+    );
+});
 
-//NHL
+
 
 module.exports = router;
