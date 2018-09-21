@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../knex');
 
-//   const cohortId = parseInt(req.params.cohortId);
-//   const cohort = data.cohorts.filter(cohort => cohort.id === cohortId);
-//   res.status(200).send(cohort);
-
 router.get('/', (req, res) => {
   knex('teams')
   .then(data => res.status(200).json(data))
@@ -19,7 +15,6 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const id = parseInt(req.params.id);
-  console.log('hi', req.params)
 
   knex('teams')
     .where('id', id)
@@ -33,11 +28,41 @@ router.get('/:id', (req, res) => {
 });
 
 router.get('/league/:sportLeague', (req, res) => {
-  console.log('hi', req.params)
 
   const sportLeague = req.params.sportLeague.toUpperCase();
   knex('teams')
   .where('sport_league', sportLeague)
+  .then(teams => res.status(200).json(teams))
+    .catch(err =>
+      res.status(404).json({
+        message:
+          'The data you are looking for could not be found. Please try again'
+      })
+    );
+});
+
+router.get('/state/:stateName', (req, res) => {
+  console.log('state', req.params)
+  const state = req.params.stateName;
+  knex('teams')
+  .where('state', state)
+  .then(teams => res.status(200).json(teams))
+    .catch(err =>
+      res.status(404).json({
+        message:
+          'The data you are looking for could not be found. Please try again'
+      })
+    );
+});
+
+router.get('/state/:stateName/:sportLeague', (req, res) => {
+  console.log('state', req.params)
+  const state = req.params.stateName;
+  const sportLeague = req.params.sportLeague;
+  console.log(state, sportLeague);
+  knex('teams')
+  .where('state', state)
+  .andWhere('sport_league', sportLeague)
   .then(teams => res.status(200).json(teams))
     .catch(err =>
       res.status(404).json({
