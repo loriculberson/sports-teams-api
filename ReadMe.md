@@ -1,5 +1,12 @@
 ### Sports Teams API
 
+#### Set Up
+`brew install postgres`
+`npm install -g knex`
+
+`brew services start postgresql`
+`createdb <name of db>`
+
 #### To Run Migration
 `knex migrate:latest`
 

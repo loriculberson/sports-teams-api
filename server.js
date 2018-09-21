@@ -4,6 +4,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 
 const index = require('./routes/index');
+const state = require('./routes/state');
 const teams = require('./routes/teams');
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api', index);
+app.use('/api/teams/state', state);
 app.use('/api/teams', teams);
 
 app.use(function(req, res, next) {
