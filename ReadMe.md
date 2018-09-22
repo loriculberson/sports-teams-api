@@ -7,7 +7,7 @@
 `brew services start postgresql`
 `createdb <name of db>`
 
-*Install packages*
+**Install packages**
 `npm install`
 
 #### To Run Migration
@@ -19,24 +19,30 @@
 ### Sport Teams API Endpoints
 GET
 
-*All Teams*
+**All Teams**
+
 `/api/teams`
 
-*By Team*
+**By Team**
+
 `/api/teams/:id`
 
-*By Sport League*
+**By Sport League**
+
 `/api/teams/:sportLeague`
+
 `:sportLeague` includes: MLB, NBA, NFL, NHL
 
-*By State*
+**By State**
+
 `/api/teams/state/:stateName`
 States are case agnostic.
 
-*By State and Sport League*
+**By State and Sport League**
+
 `/api/teams/state/:stateName/:sportLeague`
 
-PUT/PATCH
+PUT
 `/api/teams/:id`
 
 POST
@@ -44,7 +50,6 @@ POST
 
 DELETE
 `/api/teams/:id`
-
 
 
 
