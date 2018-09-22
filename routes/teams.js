@@ -66,7 +66,7 @@ router.post('/', (req, res) => {
     .then(team => res.status(201).json(team))
     .catch(err =>
       res.status(404).json({
-        message: `We have encountered a problem updating the ${city} ${team_name}. Please try again`
+        message: `We have encountered a problem creating the ${city} ${team_name}. Please try again`
       })
     );
 });
