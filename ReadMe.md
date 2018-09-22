@@ -17,8 +17,10 @@ createdb sports_teams
 ## To Seed the Database
 `knex seed:run`
 
-## Endpoints
-*GET
+## Endpoints 
+
+### GET
+
 
 **All Teams**
 
@@ -43,16 +45,16 @@ States are case agnostic.
 
 `/api/teams/state/:stateName/:sportLeague`
 
-PUT
+### PUT
 `/api/teams/:id`
 
-POST
+### POST
 `/api/teams`
 
-DELETE
+### DELETE
 `/api/teams/:id`
 
 
-
+**Resources:**
 [Data source: radavid 2013](https://github.com/radavis/gametoday/blob/master/db/teams.csv)
 
