@@ -1,23 +1,24 @@
-### Sports Teams API
+# Sports Teams API
 
-#### Set Up
-`brew install postgres`
-`npm install -g knex`
+## Set Up
+```
+brew install postgres
+npm install -g knex
+brew services start postgresql
+createdb sports_teams
+```
 
-`brew services start postgresql`
-`createdb <name of db>`
-
-**Install packages**
+## Install packages
 `npm install`
 
-#### To Run Migration
+## To Run Migration
 `knex migrate:latest`
 
-#### To Seed the Database
+## To Seed the Database
 `knex seed:run`
 
-### Sport Teams API Endpoints
-GET
+## Endpoints
+*GET
 
 **All Teams**
 
@@ -53,5 +54,5 @@ DELETE
 
 
 
-Data from 2013 courtesy of: https://github.com/radavis/gametoday/blob/master/db/teams.csv
+[Data source: radavid 2013](https://github.com/radavis/gametoday/blob/master/db/teams.csv)
 
