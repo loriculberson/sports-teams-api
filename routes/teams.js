@@ -71,6 +71,26 @@ router.post('/', (req, res) => {
     );
 });
 
+router.post('/', (req, res) => {
+  const {team_name, city, state, venue, sport_league} = req.body;
+
+  knex('teams')
+    .returning('*')
+    .insert({
+      team_name,
+      city, 
+      state, 
+      venue, 
+      sport_league
+    })
+    .then(team => res.status(201).json(team))
+    .catch(err =>
+      res.status(404).json({
+        message: `We have encountered a problem creating the ${city} ${team_name}. Please try again`
+      })
+    );
+});
+
 
 router.delete('/:id', (req, res) => {
   const id = parseInt(req.params.id);
@@ -89,7 +109,7 @@ router.delete('/:id', (req, res) => {
     );
 })
 
-router.get('/:sportLeague', (req, res) => {
+router.get('/league/:sportLeague', (req, res) => {
   const sportLeague = req.params.sportLeague.toUpperCase();
   knex('teams')
   .where('sport_league', sportLeague)
