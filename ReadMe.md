@@ -1,24 +1,60 @@
-### Sports Teams API
+# Sports Teams API
 
-#### Set Up
-`brew install postgres`
-`npm install -g knex`
+## Set Up
+```
+brew install postgres
+npm install -g knex
+brew services start postgresql
+createdb sports_teams
+```
 
-`brew services start postgresql`
-`createdb <name of db>`
+## Install packages
+`npm install`
 
-#### To Run Migration
+## To Run Migration
 `knex migrate:latest`
 
-#### To Seed the Database
+## To Seed the Database
 `knex seed:run`
 
-#### API Endpoints
-GET
-* all US sports teams
-* all NFL teams
-* all MLB teams
-* all NBA teams
+## Endpoints 
 
-Data from 2013 courtesy of: https://github.com/radavis/gametoday/blob/master/db/teams.csv
+### GET
+
+
+**All Teams**
+
+`/api/teams`
+
+**By Team**
+
+`/api/teams/:id`
+
+**By Sport League**
+
+`/api/teams/:sportLeague`
+
+`:sportLeague` includes: MLB, NBA, NFL, NHL
+
+**By State**
+
+`/api/teams/state/:stateName`
+States are case agnostic.
+
+**By State and Sport League**
+
+`/api/teams/state/:stateName/:sportLeague`
+
+### PUT
+`/api/teams/:id`
+
+### POST
+`/api/teams`
+
+### DELETE
+`/api/teams/:id`
+
+
+**Resources:**
+[Data source: radavid 2013](https://github.com/radavis/gametoday/blob/master/db/teams.csv)
 

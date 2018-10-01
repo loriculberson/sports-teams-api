@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   .catch(err =>
     res.status(404).json({
       message:
-          'No,The data you are looking for could not be found. Please try again'
+          'The data you are looking for could not be found. Please try again'
       })
     );
 });
@@ -25,16 +25,48 @@ router.get('/:id', (req, res) => {
       })
     );
 });
-//update sports team
-router.patch('/:id', (req, res) => {
+
+
+router.put('/:id', (req, res) => {
   const id = parseInt(req.params.id);
+  const {team_name, city, state, venue, sport_league} = req.body;
   knex('teams')
     .where('id', id)
-    .then(team => res.status(200).json(team))
+    .returning('*')
+    .update({
+      team_name,
+      city, 
+      state, 
+      venue, 
+      sport_league
+    })
+    .then(team => {
+      if (team.length) {
+        res.status(201).json(team);
+      } else {
+        res.status(404).json({
+          message: `We have encountered a problem updating the ${city} ${team_name}. Please try again`
+        });
+      }
+    });
+});
+
+router.post('/', (req, res) => {
+  const {team_name, city, state, venue, sport_league} = req.body;
+
+  knex('teams')
+    .returning('*')
+    .insert({
+      team_name,
+      city, 
+      state, 
+      venue, 
+      sport_league
+    })
+    .then(team => res.status(201).json(team))
     .catch(err =>
       res.status(404).json({
-        message:
-          'The data you are looking for could not be found. Please try again'
+        message: `We have encountered a problem creating the ${city} ${team_name}. Please try again`
       })
     );
 });
@@ -56,7 +88,7 @@ router.post('/', (req, res) => {
     );
 });
 
-//delete sports team
+
 router.delete('/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
