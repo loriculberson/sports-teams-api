@@ -71,19 +71,22 @@ router.post('/', (req, res) => {
     );
 });
 
-//create sports team
 router.post('/', (req, res) => {
-  const { team_name, city, state, venue, sport_league } = req.body;
+  const {team_name, city, state, venue, sport_league} = req.body;
 
   knex('teams')
     .returning('*')
-    .insert({ team_name, city, state, venue, sport_league  })
-    // .into('teams')
-    .then(data => res.status(200).json(data))
+    .insert({
+      team_name,
+      city, 
+      state, 
+      venue, 
+      sport_league
+    })
+    .then(team => res.status(201).json(team))
     .catch(err =>
       res.status(404).json({
-        message:
-          'The data could not be loaded into the database. Please try again'
+        message: `We have encountered a problem creating the ${city} ${team_name}. Please try again`
       })
     );
 });
