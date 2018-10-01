@@ -106,7 +106,7 @@ router.delete('/:id', (req, res) => {
     );
 })
 
-router.get('/:sportLeague', (req, res) => {
+router.get('/league/:sportLeague', (req, res) => {
   const sportLeague = req.params.sportLeague.toUpperCase();
   knex('teams')
   .where('sport_league', sportLeague)

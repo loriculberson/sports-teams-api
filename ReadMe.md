@@ -32,18 +32,18 @@ createdb sports_teams
 
 **By Sport League**
 
-`/api/teams/:sportLeague`
+`/api/teams/league/:sportLeague`
 
 `:sportLeague` includes: MLB, NBA, NFL, NHL
 
 **By State**
 
-`/api/teams/state/:stateName`
+`/api/state/:stateName`
 States are case agnostic.
 
 **By State and Sport League**
 
-`/api/teams/state/:stateName/:sportLeague`
+`/api/state/:stateName/:sportLeague`
 
 ### PUT
 `/api/teams/:id`

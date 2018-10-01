@@ -15,8 +15,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api', index);
-app.use('/api/teams/state', state);
 app.use('/api/teams', teams);
+app.use('/api/state', state);
 
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
