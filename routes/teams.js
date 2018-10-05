@@ -17,15 +17,17 @@ router.get('/:id', (req, res) => {
   const id = parseInt(req.params.id);
   knex('teams')
     .where('id', id)
-    .then(team => res.status(200).json(team))
-    .catch(err =>
-      res.status(404).json({
-        message:
+    .then(team => {
+      if (team.length >=1) {
+        res.status(201).json(team);
+      } else {
+        res.status(404).json({
+          message: 
           'The data you are looking for could not be found. Please try again'
-      })
-    );
+        })
+      }
+    });
 });
-
 
 router.put('/:id', (req, res) => {
   const id = parseInt(req.params.id);
@@ -71,26 +73,6 @@ router.post('/', (req, res) => {
     );
 });
 
-router.post('/', (req, res) => {
-  const {team_name, city, state, venue, sport_league} = req.body;
-
-  knex('teams')
-    .returning('*')
-    .insert({
-      team_name,
-      city, 
-      state, 
-      venue, 
-      sport_league
-    })
-    .then(team => res.status(201).json(team))
-    .catch(err =>
-      res.status(404).json({
-        message: `We have encountered a problem creating the ${city} ${team_name}. Please try again`
-      })
-    );
-});
-
 
 router.delete('/:id', (req, res) => {
   const id = parseInt(req.params.id);
@@ -109,17 +91,20 @@ router.delete('/:id', (req, res) => {
     );
 })
 
+
 router.get('/league/:sportLeague', (req, res) => {
   const sportLeague = req.params.sportLeague.toUpperCase();
   knex('teams')
   .where('sport_league', sportLeague)
-  .then(teams => res.status(200).json(teams))
-    .catch(err =>
+  .then(team => {
+    if (team.length >= 1) {
+      res.status(201).json(team);
+    } else {
       res.status(404).json({
-        message:
-          'The data you are looking for could not be found. Please try again'
-      })
-    );
+        message: `There are no teams found in the  ${sportLeague} league. Please try again`
+      });
+    }
+  });
 });
 
 module.exports = router;

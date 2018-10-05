@@ -7,14 +7,17 @@ router.get('/:stateName', (req, res) => {
   // console
   knex('teams')
   .where('state', state)
-  .then(teams => res.status(200).json(teams))
-    .catch(err =>
+  .then(teams => {
+    if (teams.length >= 1) {
+      res.status(201).json(teams);
+    } else {
       res.status(404).json({
-        message:
-          'Sorry. The data you are looking for could not be found. Please try again'
-      })
-    );
+        message: `Teams in ${state} could not be found. Please try again`
+      });
+    }
+  })
 });
+
 
 router.get('/:stateName/:sportLeague', (req, res) => {
   const state = updateStateName(req.params.stateName);
@@ -23,13 +26,15 @@ router.get('/:stateName/:sportLeague', (req, res) => {
   knex('teams')
   .where('state', state)
   .andWhere('sport_league', sportLeague)
-  .then(teams => res.status(200).json(teams))
-    .catch(err =>
+  .then(teams => {
+    if (teams.length >= 1) {
+      res.status(201).json(teams);
+    } else {
       res.status(404).json({
-        message:
-          'The data you are looking for could not be found. Please try again'
-      })
-    );
+        message: `Teams in ${state} and ${sportLeague} could not be found. Please try again`
+      });
+    }
+  })
 });
 
 const updateStateName = (name) => {
